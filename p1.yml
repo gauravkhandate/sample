@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: create a directory on each manage node 
+      file:
+        path: /root/new
+        state: directory
+    - name: copy the all file on each manage node
+      copy:
+        src: /root/ansible/test
+        dest: /root/new
+    - name: installed the web package on each manage node
+      yum:
+        name:
+          - httpd
+          - wget
+        state: present
+    - name: Start the httpd service on each manage node
+      service:
+        name: httpd
+        state: started
+        enabled: true
+...
